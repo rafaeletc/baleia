@@ -1,0 +1,19 @@
+wekan:
+  image: mquandalle/wekan
+  container_name: wekan
+  restart: always
+  links:
+    - wekandb
+  environment:
+    - MONGO_URL=mongodb://wekandb/wekan
+    - ROOT_URL=https://mural.etcetal.me
+    - MAIL_URL=smtp://user:pass@mailserver.example.com:25/
+    - MAIL_FROM=cadernodemao@gmail.com
+  ports:
+    - 8081:80
+
+wekandb:
+   image: mongo
+   container_name: wekan_mongodb
+   volumes:
+     - wekan-db-data:/data/db

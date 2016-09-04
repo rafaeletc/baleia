@@ -1,0 +1,25 @@
+wordpress:
+  image: wordpress
+  container_name: wordpress
+  restart: always
+  links:
+    - mariadb:mysql
+  environment:
+    - VIRTUAL_HOST=etcetal.me,www.etcetal.me
+    - LETSENCRYPT_HOST=etcetal.me,www.etcetal.me
+    - LETSENCRYPT_EMAIL=cadernodemao@gmail.com
+  expose:
+    - 80
+    - 443
+  volumes:
+    - wordpress-data:/var/www/html
+    - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+mariadb:
+  image: mariadb
+  container_name: wordpress_mariadb
+  restart: always
+  environment:
+    - MYSQL_ROOT_PASSWORD=luther
+    - MYSQL_DATABASE=wordpress
+  volumes:
+    - wordpress-db-data:/var/lib/mysql
